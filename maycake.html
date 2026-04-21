@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maycake – עוגות בעבודת יד</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-light: #fce8ee;
+    --pink-mid: #f2c4d0;
+    --pink-dark: #c8788a;
+    --pink-deep: #a85568;
+    --cream: #fdf6f0;
+    --white: #ffffff;
+    --text-dark: #3d2430;
+    --text-mid: #7a4f5a;
+    --text-light: #b08090;
+    --shadow: 0 8px 40px rgba(168,85,104,0.10);
+    --shadow-hover: 0 16px 50px rgba(168,85,104,0.18);
+    --radius: 20px;
+    --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--white);
+    box-shadow: 0 2px 20px rgba(168,85,104,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 64px;
+    object-fit: contain;
+  }
+
+  .header-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-links a {
+    color: var(--pink-deep);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+  }
+
+  .header-links a:hover { color: var(--pink-dark); transform: translateY(-1px); }
+
+  .header-links .instagram-link {
+    background: linear-gradient(135deg, var(--pink-light), var(--pink-mid));
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #fce8ee 0%, #fdf0f5 50%, #fef6f0 100%);
+    padding: 70px 32px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(242,196,208,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(252,232,238,0.6) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--pink-mid);
+    color: var(--pink-deep);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    color: var(--text-dark);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-mid);
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pink-deep);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: var(--transition);
+    box-shadow: 0 6px 24px rgba(168,85,104,0.3);
+  }
+
+  .hero-cta:hover {
+    background: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(61,36,48,0.3);
+  }
+
+  /* ===== LOADING ===== */
+  #loading {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-light);
+    font-size: 16px;
+  }
+
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--pink-mid);
+    border-top-color: var(--pink-deep);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== GALLERY SECTION ===== */
+  .gallery-section {
+    padding: 60px 32px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  /* ===== CATEGORY ===== */
+  .category-block {
+    margin-bottom: 64px;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--text-dark);
+    font-style: italic;
+  }
+
+  .category-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--pink-mid));
+  }
+
+  .category-emoji {
+    font-size: 22px;
+  }
+
+  /* ===== CARDS GRID ===== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .cake-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .cake-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .cake-card:hover .card-overlay { opacity: 1; }
+
+  .card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+  }
+
+  .card-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .cake-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(168,85,104,0.6), transparent);
+    opacity: 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+
+  .card-overlay span {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-body {
+    padding: 16px 18px 18px;
+  }
+
+  .card-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-tag {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--pink-light);
+    color: var(--pink-deep);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(61,36,48,0.6);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: 28px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(61,36,48,0.25);
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    scrollbar-width: none;
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal::-webkit-scrollbar { display: none; }
+
+  .modal-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .modal-body {
+    padding: 28px 32px 32px;
+  }
+
+  .modal-tag {
+    display: inline-block;
+    background: var(--pink-light);
+    color: var(--pink-deep);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+  }
+
+  .modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+
+  .modal-desc {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .modal-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    transition: var(--transition);
+    box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+    width: 100%;
+  }
+
+  .modal-cta:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(37,211,102,0.4);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    transition: var(--transition);
+    z-index: 10;
+  }
+
+  .modal-close:hover { background: white; transform: scale(1.1); }
+
+  .modal-wrapper { position: relative; }
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    width: 58px; height: 58px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+    z-index: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 32px rgba(37,211,102,0.5);
+    animation: none;
+  }
+
+  .wa-float svg { width: 30px; height: 30px; fill: white; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 6px 40px rgba(37,211,102,0.6); }
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--text-dark);
+    color: var(--pink-mid);
+    text-align: center;
+    padding: 32px;
+    font-size: 14px;
+  }
+
+  footer a { color: var(--pink-mid); text-decoration: none; }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center;
+    padding: 60px 32px;
+    color: var(--text-light);
+  }
+
+  .empty-state .emoji { font-size: 48px; margin-bottom: 16px; }
+
+  /* ===== ERROR ===== */
+  #error-msg {
+    display: none;
+    background: #fff0f3;
+    border: 1px solid var(--pink-mid);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 32px;
+    color: var(--pink-deep);
+    text-align: center;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    header { padding: 10px 16px; }
+    .logo-img { height: 50px; }
+    .hero { padding: 48px 20px 40px; }
+    .gallery-section { padding: 40px 16px; }
+    .cards-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .modal-body { padding: 20px; }
+    .modal-name { font-size: 22px; }
+    .wa-float { bottom: 20px; left: 20px; width: 52px; height: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo-area">
+    <img src="https://drive.google.com/uc?export=view&id=1ksAFxZhC_NSMm8BQDfQ3WHcj7kcvv-4D" alt="Maycake לוגו" class="logo-img" onerror="this.style.display='none'">
+  </a>
+  <div class="header-links">
+    <a href="https://wa.me/972542070025" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.022-1.38l-.36-.214-3.742.893.923-3.641-.234-.374A9.788 9.788 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      צרו קשר
+    </a>
+    <a href="https://instagram.com/maycake.90" target="_blank" class="instagram-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      @maycake.90
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✨ עוגות בעבודת יד – הוד השרון</div>
+  <h1>כל עוגה היא<br><em>יצירת אמנות</em></h1>
+  <p>עוגות מעוצבות בהתאמה אישית לכל אירוע – עם אהבה, יצירתיות וחומרים הטובים ביותר</p>
+  <a href="https://wa.me/972542070025?text=היי, אני רוצה לשמוע פרטים על עוגות מותאמות אישית 🎂" target="_blank" class="hero-cta">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.022-1.38l-.36-.214-3.742.893.923-3.641-.234-.374A9.788 9.788 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    דברו איתי בוואטסאפ
+  </a>
+</section>
+
+<!-- ERROR -->
+<div id="error-msg">
+  ⚠️ לא ניתן לטעון את הקולקציה כרגע. אנא בדקו את חיבור ה-Google Sheets.<br>
+  <small>פרטים נוספים בקונסול הדפדפן.</small>
+</div>
+
+<!-- GALLERY -->
+<div id="loading">
+  <div class="spinner"></div>
+  טוען את הקולקציה...
+</div>
+<div class="gallery-section" id="gallery" style="display:none;"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-wrapper">
+    <button class="modal-close" onclick="closeModal(null, true)">✕</button>
+    <div class="modal" id="modal">
+      <img id="modal-img" src="" alt="" class="modal-img">
+      <div class="modal-body">
+        <span class="modal-tag" id="modal-tag"></span>
+        <h2 class="modal-name" id="modal-name"></h2>
+        <p class="modal-desc" id="modal-desc"></p>
+        <a id="modal-wa" href="#" target="_blank" class="modal-cta">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.022-1.38l-.36-.214-3.742.893.923-3.641-.234-.374A9.788 9.788 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          אני מעוניין/ת – שלח/י הודעה
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/972542070025?text=היי Maycake! אני רוצה לשמוע פרטים על עוגה 🎂" target="_blank" class="wa-float" title="דברו איתי בוואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.022-1.38l-.36-.214-3.742.893.923-3.641-.234-.374A9.788 9.788 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <p>Maycake © 2025 | הוד השרון – שכונת 1200</p>
+  <p style="margin-top:8px;">
+    <a href="https://instagram.com/maycake.90" target="_blank">@maycake.90</a>
+    &nbsp;|&nbsp;
+    <a href="tel:054-2070025">054-2070025</a>
+  </p>
+</footer>
+
+<script>
+// =============================================
+// CONFIGURATION – עדכן כאן את ה-Sheet ID שלך
+// =============================================
+const SHEET_ID = '1euGQ_Rx2if_9ysoB3gBb5vnNpvEAq0QfHy6ledI9l8A';
+const SHEET_NAME = 'גיליון1';
+// =============================================
+
+const CATEGORIES_ORDER = ['בנים', 'בנות', 'מבוגרים', 'מיוחדות'];
+const CATEGORY_EMOJIS = { 'בנים': '🚀', 'בנות': '🌸', 'מבוגרים': '✨', 'מיוחדות': '🎉' };
+const WA_NUMBER = '972542070025';
+
+async function loadCakes() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const rows = json.table.rows;
+    const cakes = rows.map(r => ({
+      name: r.c[0]?.v || '',
+      description: r.c[1]?.v || '',
+      category: r.c[2]?.v || '',
+      image: r.c[3]?.v || ''
+    })).filter(c => c.name);
+    renderGallery(cakes);
+  } catch(e) {
+    console.error(e);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error-msg').style.display = 'block';
+  }
+}
+
+function renderGallery(cakes) {
+  document.getElementById('loading').style.display = 'none';
+  const gallery = document.getElementById('gallery');
+  gallery.style.display = 'block';
+
+  const byCategory = {};
+  CATEGORIES_ORDER.forEach(c => byCategory[c] = []);
+  cakes.forEach(cake => {
+    if (byCategory[cake.category] !== undefined) {
+      byCategory[cake.category].push(cake);
+    } else {
+      byCategory['מיוחדות'] = byCategory['מיוחדות'] || [];
+      byCategory['מיוחדות'].push(cake);
+    }
+  });
+
+  let html = '';
+  CATEGORIES_ORDER.forEach(cat => {
+    const items = byCategory[cat];
+    if (!items || items.length === 0) return;
+    html += `
+      <div class="category-block">
+        <div class="category-header">
+          <span class="category-emoji">${CATEGORY_EMOJIS[cat] || '🎂'}</span>
+          <h2 class="category-title">${cat}</h2>
+          <div class="category-line"></div>
+        </div>
+        <div class="cards-grid">
+          ${items.map((cake, i) => `
+            <div class="cake-card" onclick="openModal(${JSON.stringify(cake).replace(/"/g, '&quot;')})" style="animation-delay:${i*0.07}s">
+              <div class="card-img-wrap">
+                <img src="${cake.image}" alt="${cake.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect fill=%22%23fce8ee%22 width=%22400%22 height=%22300%22/><text x=%22200%22 y=%22160%22 text-anchor=%22middle%22 fill=%22%23c8788a%22 font-size=%2248%22>🎂</text></svg>'">
+                <div class="card-overlay"><span>👁 לפרטים נוספים</span></div>
+              </div>
+              <div class="card-body">
+                <div class="card-name">${cake.name}</div>
+                <div class="card-desc">${cake.description}</div>
+                <span class="card-tag">${cake.category}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  if (!html) {
+    html = `<div class="empty-state"><div class="emoji">🎂</div><p>הקולקציה בקרוב...</p></div>`;
+  }
+
+  gallery.innerHTML = html;
+}
+
+function openModal(cake) {
+  document.getElementById('modal-img').src = cake.image;
+  document.getElementById('modal-img').alt = cake.name;
+  document.getElementById('modal-name').textContent = cake.name;
+  document.getElementById('modal-desc').textContent = cake.description;
+  document.getElementById('modal-tag').textContent = cake.category;
+  const msg = encodeURIComponent(`היי Maycake! אני מעוניין/ת בפרטים על עוגת ${cake.name} 🎂`);
+  document.getElementById('modal-wa').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e, force) {
+  if (force || (e && e.target === document.getElementById('modal-overlay'))) {
+    document.getElementById('modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(null, true); });
+
+// Load on start
+if (false) {
+  // Demo mode – show placeholder
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('gallery').style.display = 'block';
+  document.getElementById('gallery').innerHTML = `
+    <div class="empty-state">
+      <div class="emoji">🎂</div>
+      <p style="color:var(--pink-deep);font-weight:600;font-size:18px;">האתר מוכן!</p>
+      <p style="margin-top:8px;">כעת יש לחבר את Google Sheets לפי ההוראות שקיבלת</p>
+    </div>
+  `;
+} else {
+  loadCakes();
+}
+</script>
+</body>
+</html>
