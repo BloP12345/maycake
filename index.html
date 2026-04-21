@@ -88,11 +88,19 @@
 
   /* ===== HERO ===== */
   .hero {
-    background: linear-gradient(135deg, rgba(252,232,238,0.55) 0%, rgba(253,240,245,0.55) 50%, rgba(254,246,240,0.55) 100%), url('https://raw.githubusercontent.com/BloP12345/maycake/main/%D7%9C%D7%95%D7%92%D7%95.jpg') center/38% no-repeat;
-    padding: 80px 32px 70px;
+    background: linear-gradient(135deg, rgba(252,232,238,0.55) 0%, rgba(253,240,245,0.55) 50%, rgba(254,246,240,0.55) 100%), url('https://raw.githubusercontent.com/BloP12345/maycake/main/%D7%9C%D7%95%D7%92%D7%95.jpg') center top/80% no-repeat;
+    padding: 20px 32px 40px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-badge-mobile {
+    display: none;
   }
 
   .hero::before {
@@ -505,7 +513,25 @@
   @media (max-width: 600px) {
     header { padding: 10px 16px; }
     .logo-img { height: 50px; }
-    .hero { padding: 48px 20px 40px; }
+    .header-badge { display: none; }
+    .hero-badge-mobile {
+      display: inline-block;
+      background: var(--pink-mid);
+      color: var(--pink-deep);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: auto;
+      margin-top: 16px;
+      letter-spacing: 0.5px;
+    }
+    .hero { 
+      padding: 16px 20px 32px;
+      min-height: 380px;
+      background: linear-gradient(135deg, rgba(252,232,238,0.55) 0%, rgba(253,240,245,0.55) 50%, rgba(254,246,240,0.55) 100%), url('https://raw.githubusercontent.com/BloP12345/maycake/main/%D7%9C%D7%95%D7%92%D7%95.jpg') center top/95% no-repeat;
+      justify-content: space-between;
+    }
     .gallery-section { padding: 40px 16px; }
     .cards-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
     .modal-body { padding: 20px; }
@@ -521,7 +547,7 @@
   <div class="logo-area">
     <span style="font-family:'Playfair Display',serif; font-size:22px; color:var(--pink-deep); font-style:italic;">Maycake</span>
   </div>
-  <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); white-space:nowrap;">
+  <div class="header-badge" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); white-space:nowrap;">
     <div class="hero-badge" style="margin:0;">✨ עוגות בעבודת יד – הוד השרון</div>
   </div>
   <div class="header-links">
@@ -538,7 +564,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div style="margin-top: 140px;"></div>
+  <div class="hero-badge-mobile">✨ עוגות בעבודת יד – הוד השרון</div>
   <p>עוגות מעוצבות בהתאמה אישית לכל אירוע – עם אהבה, יצירתיות והחומרים הטובים ביותר</p>
 </section>
 
